@@ -1,7 +1,11 @@
 import OpenAI from "openai";
 
 // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const openai = (() => {
+  const key = process.env.OPENAI_API_KEY;
+  if (!key) return null;
+  return new OpenAI({ apiKey: key });
+})();
 
 interface ImageGenerationOptions {
   prompt: string;
@@ -11,7 +15,7 @@ interface ImageGenerationOptions {
 
 export async function generateImage(options: ImageGenerationOptions): Promise<{ url: string } | null> {
   try {
-    if (!process.env.OPENAI_API_KEY) {
+    if (!openai) {
       console.warn("OpenAI API key not configured - skipping image generation");
       return null;
     }
@@ -23,8 +27,8 @@ export async function generateImage(options: ImageGenerationOptions): Promise<{ 
       size: options.size || "1024x1024",
       quality: options.quality || "standard",
     });
-
-    return { url: response.data[0].url };
+    const firstImage = response.data?.[0];
+    return firstImage?.url ? { url: firstImage.url } : null;
   } catch (error: any) {
     console.error("OpenAI image generation failed:", error.message);
     // Return null instead of throwing - graceful degradation
