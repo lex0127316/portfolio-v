@@ -1,0 +1,153 @@
+I want to build a world-class, modern developer portfolio using the latest professional frameworks and UI technologies. The design should feel premium, minimal, fast, and deeply polished. Use cutting-edge tools that showcase strong engineering discipline. Build the entire system with a structure and logic that can be easily expanded, extended, and evolved in the future without rewriting core components.
+
+Build a complete 3-page portfolio with these requirements:
+
+1. Tech Stack Requirements (latest and best-in-class)
+
+Use modern, production-level tools:
+
+Next.js 15 (App Router) for routing, server components, metadata, and layouts
+
+React 19 with Server Actions for contact form submissions
+
+Tailwind CSS 4 with design tokens, custom theme, and container queries
+
+Framer Motion 11 for premium interaction and page motion
+
+shadcn/ui for consistent, accessible, professionally designed components
+
+Vercel OG/Image + OpenAI DALL·E 3.5 for AI-generated visuals
+
+React Email + Resend for the contact form
+
+Vercel Analytics + Speed Insights for monitoring
+
+Strict TypeScript + ESLint + Prettier rules
+
+PNPM for fast and reliable package management
+
+2. Portfolio Structure
+
+Create three primary pages/sections:
+
+About: introduction, experience, brand story, skills
+
+Work: mosaic gallery, case studies, device mockups
+
+Contact: form, socials, QR code to resume
+
+All pages must adopt a type-first, whitespace-rich layout.
+
+3. AI-Generated Brand Identity
+
+Use OpenAI DALL·E 3.5 to generate project hero images
+
+Auto-generate abstract, minimal background textures
+
+Generate cover art for the downloadable resume
+
+Centralize brand colors, fonts, and spacing in a Tailwind theme config for long-term scalability
+
+4. Premium Project Showcases
+
+Device-frame mockups (MacBook, tablet, mobile)
+
+Case-study modal with: problem → approach → result
+
+Motion-enhanced gallery with subtle animations
+
+Mosaic grid with hover transitions (Framer Motion)
+
+Dynamic light/dark thumbnails
+
+5. Motion & Interaction
+
+Smooth scrolling and page transitions
+
+Premium micro-interactions on all interactive elements
+
+Auto dark/light mode with toggle
+
+Soft landing animations for hero text
+
+Optional parallax hero layers
+
+6. Visual Style & Layout
+
+Scandinavian/Swiss minimalism
+
+Crips alignment and elegant spacing
+
+Responsive design with container queries
+
+Clean navigation with active-section auto-highlight
+
+Balanced vertical rhythm and strong typography hierarchy
+
+7. Resume & Downloads
+
+Auto-generate PDF one-pager using Playwright/Puppeteer
+
+Cover art via OpenAI/DALL·E
+
+Floating CV download button with a premium hover state
+
+Optional dynamic QR code generator
+
+8. Contact & Social
+
+Server Action–powered contact form
+
+Input validation using Zod
+
+Clean, consistent social icons using Lucide
+
+“Copy email to clipboard” micro-interaction
+
+9. Performance & SEO
+
+Next.js metadata API + Open Graph images
+
+Lighthouse 95+ target on all metrics
+
+Font preloading & optimized image pipelines
+
+Dynamic sitemap generation
+
+Cache and revalidate strategies applied properly
+
+10. Developer Experience & Architecture (Future-Proof)
+
+Build the system with a forward-looking, modular architecture that can grow without friction:
+
+Feature-based folder structure using app/
+
+Dedicated directories for components, layouts, hooks, context, data, and types
+
+Reusable UI primitives and core components
+
+Centralized design tokens and theme config for future redesigns
+
+MDX-compatible content system for About, Work, and future blog pages
+
+API routes structured for scalability (e.g., /api/contact, /api/og)
+
+Utility functions and helpers grouped cleanly
+
+Fully documented code comments for easy onboarding
+
+Everything designed so future pages (Blog, Now, Uses, Services, etc.) can plug in smoothly without breaking architecture
+
+This must be built with a structure and logic that can be expanded later effortlessly — meaning new features, components, or entire sections can be added with minimal refactoring.
+
+11. Optional Smart Add-ons
+
+Minimal AI chat widget (“Ask me about my projects”)
+
+Animated career timeline with scroll-triggered transitions
+
+“Now” page summarizing what I'm currently working on
+
+MDX-powered blog section (only if needed later)
+
+Feature flags for future experimental modules

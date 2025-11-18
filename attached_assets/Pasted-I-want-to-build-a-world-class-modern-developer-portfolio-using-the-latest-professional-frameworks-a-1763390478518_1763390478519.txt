@@ -1,0 +1,141 @@
+I want to build a world-class, modern developer portfolio using the latest professional frameworks and UI technologies. The design should feel premium, minimal, fast, and deeply polished. Use cutting-edge tools that showcase strong engineering standards.
+
+Build a complete 3-page portfolio with these requirements:
+
+1. Tech Stack Requirements (latest and best-in-class)
+
+Use modern, production-level tools:
+
+Next.js 15 (App Router) for routing, server components, image optimization, metadata, and SEO
+
+React 19 with Server Actions for contact form submissions
+
+Tailwind CSS 4 with a custom theme file for typography, colors, spacing, and animations
+
+Framer Motion 11 for premium micro-interactions and page transitions
+
+shadcn/ui components for consistent, elegant, accessible UI
+
+Vercel OG/Image or OpenAI DALL·E for AI-generated hero images and backgrounds
+
+Vercel Analytics + Speed Insights for performance monitoring
+
+React Email + Resend (or EmailJS) for smart contact form delivery
+
+Vercel Deploy as the recommended hosting environment
+
+ESLint + Prettier + strict TypeScript mode for clean and maintainable code
+
+PNPM as the package manager for speed
+
+2. Portfolio Structure
+
+Create three primary sections/pages:
+
+About: intro, skills, personal story, brand tagline
+
+Work: premium project gallery, case studies, mockups, AI hero images
+
+Contact: form, social links, email copy, QR code to resume
+
+All pages must follow a typography-first layout with large headings, bold spacing, and clear vertical rhythm.
+
+3. AI-Generated Brand Identity
+
+Generate hero images using OpenAI DALL·E 3.5 based on project tags and brand palette
+
+Auto-generate subtle abstract background patterns
+
+Produce AI-styled cover art for the downloadable PDF resume
+
+Automatically apply the brand colors through a theme config file (Tailwind preset)
+
+4. Premium Project Showcases
+
+Use mock device frames (MacBook, iPhone, tablet)
+
+Project pages should include:
+• Hero section
+• Problem → Approach → Result story
+• Tech stack pills
+• Motion-enhanced gallery
+
+Mosaic grid with hover transitions (powered by Framer Motion)
+
+Light/dark mode adaptive thumbnails
+
+5. Motion & Interaction
+
+Smooth scroll + scroll-linked animations (Framer Motion LayoutGroup)
+
+Hover micro-interactions on buttons, cards, and nav items
+
+Intelligent auto dark/light mode using prefers-color-scheme and manual toggle
+
+Soft fade-in landing intro for your name and tagline
+
+Parallax layer option for hero sections
+
+6. Visual Style & Layout
+
+Type-driven Swiss/Scandinavian aesthetic
+
+Sharp grid alignment with generous whitespace
+
+Fluid responsive layout across mobile, tablet, widescreen
+
+Use Tailwind’s new text-balance, aspect-ratio, and CSS container queries
+
+Clean, minimal navigation with smooth auto-highlighting of active sections
+
+7. Resume & Downloads
+
+Auto-generate a PDF one-pager using:
+• OpenAI for cover art
+• Playwright/Puppeteer for high-resolution PDF export
+
+Floating “Download CV” button with soft shadow + motion
+
+Optional: dynamic QR code linking to CV
+
+8. Contact & Social
+
+Contact form using React Server Actions → Resend/EmailJS
+
+Validation with Zod + server-side runtime checking
+
+Social links with consistent brand icons using Lucide Icons
+
+9. Performance & SEO
+
+Automatic metadata based on Next.js App Router
+
+Open Graph + Twitter preview cards via API route
+
+Font preloading + optimized images
+
+Lighthouse score target: 95+ on all metrics
+
+10. Developer Experience & Structure
+
+Clean folder architecture using app/ directory
+
+Reusable design tokens, components, icons, layouts
+
+MDX-powered About and Work descriptions
+
+Custom hooks for motion, theme, and intersection observers
+
+Thorough code comments explaining how to update content
+
+Environment variable templates for deploy
+
+11. Optional Smart Add-Ons
+
+Minimal AI chat widget for “Ask me about my projects”
+
+A tech career timeline with scroll-based animations
+
+A “Now” page summarizing what I’m learning/building
+
+A blog powered by MDX if needed later
