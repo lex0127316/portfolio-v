@@ -1,4 +1,4 @@
-# Design Guidelines: Premium Developer Portfolio
+# Design Guidelines: Kei Nishkori Portfolio
 
 ## Design Approach
 
