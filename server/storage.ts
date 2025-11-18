@@ -26,7 +26,7 @@ export class MemStorage implements IStorage {
     
     // Sample resume data
     this.resumeData = {
-      name: "Alex Developer",
+      name: "Kei Nishkori",
       role: "Full-Stack Developer & Designer",
       bio: "I'm a passionate developer who loves creating beautiful, functional applications that make a difference. With expertise in modern web technologies and a keen eye for design, I build products that users love.",
       experience: [
@@ -58,7 +58,7 @@ export class MemStorage implements IStorage {
         github: "https://github.com/yourusername",
         linkedin: "https://linkedin.com/in/yourusername",
         twitter: "https://twitter.com/yourusername",
-        email: "hello@yourdomain.com"
+        email: "kei.nishkori0127@gmail.com"
       }
     };
     

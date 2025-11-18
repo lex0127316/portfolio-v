@@ -1,4 +1,5 @@
 import express, { type Request, Response, NextFunction } from "express";
+import { createServer as createNetServer } from "net";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
@@ -46,6 +47,37 @@ app.use((req, res, next) => {
   next();
 });
 
+async function findAvailablePort(startPort: number, attempts = 20) {
+  for (let i = 0; i < attempts; i++) {
+    const candidate = startPort + i;
+    const isFree = await isPortAvailable(candidate);
+    if (isFree) {
+      return candidate;
+    }
+  }
+
+  throw new Error(
+    `Unable to find an available port starting at ${startPort}. Please set the PORT environment variable.`,
+  );
+}
+
+function isPortAvailable(port: number) {
+  return new Promise<boolean>((resolve, reject) => {
+    const tester = createNetServer()
+      .once("error", (err: NodeJS.ErrnoException) => {
+        if (err.code === "EADDRINUSE" || err.code === "EACCES") {
+          resolve(false);
+        } else {
+          reject(err);
+        }
+      })
+      .once("listening", () => {
+        tester.close(() => resolve(true));
+      })
+      .listen(port, "0.0.0.0");
+  });
+}
+
 (async () => {
   const server = await registerRoutes(app);
 
@@ -70,7 +102,19 @@ app.use((req, res, next) => {
   // Other ports are firewalled. Default to 5000 if not specified.
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
-  const port = parseInt(process.env.PORT || '5000', 10);
+  const preferredPort = parseInt(process.env.PORT || "5000", 10);
+  const port =
+    process.env.PORT !== undefined
+      ? preferredPort
+      : await findAvailablePort(preferredPort);
+
+  if (port !== preferredPort) {
+    log(
+      `preferred port ${preferredPort} in use, falling back to ${port}`,
+      "server",
+    );
+  }
+
   const listenOptions: Parameters<typeof server.listen>[0] = {
     port,
     host: "0.0.0.0",
