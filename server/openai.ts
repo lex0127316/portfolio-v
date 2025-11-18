@@ -1,4 +1,8 @@
+import { config as loadEnv } from "dotenv";
 import OpenAI from "openai";
+
+loadEnv({ path: ".env.local" });
+loadEnv();
 
 // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
 const openai = (() => {
@@ -19,7 +23,6 @@ export async function generateImage(options: ImageGenerationOptions): Promise<{ 
       console.warn("OpenAI API key not configured - skipping image generation");
       return null;
     }
-
     const response = await openai.images.generate({
       model: "dall-e-3",
       prompt: options.prompt,
