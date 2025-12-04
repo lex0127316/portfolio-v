@@ -1,6 +1,6 @@
 export const siteConfig = {
-  name: "Roman M – Principal Engineer",
-  title: "Roman M — Creative Principal Engineer & Product Partner",
+  name: "Luis Carter – Principal Engineer",
+  title: "Luis Carter — Creative Principal Engineer & Product Partner",
   description:
     "I help ambitious founders ship AI-native products with cinematic polish, performance budgets, and human-centered strategy.",
   url: "https://modern-portfolio.local",
@@ -14,14 +14,14 @@ export const siteConfig = {
     "AI",
     "Portfolio",
   ],
-  location: "Remote · New York & London",
+  location: "Remote · London",
   contact: {
-    email: "hello@romanm.dev",
-    phone: "+1 (555) 010-8899",
+    email: "luis.carter1995@outlook.com",
+    phone: "+44 (74) 5125 0921",
   },
   social: {
-    github: "https://github.com/romanm",
-    linkedin: "https://www.linkedin.com/in/romanm",
+    github: "https://github.com/lex0127316",
+    linkedin: "https://www.linkedin.com/in/luis-carter-122457397",
     twitter: "https://x.com/romanmakes",
   },
   githubUsername: "vercel",
