@@ -8,6 +8,7 @@ import {
   createHeroBackgroundPrompt,
   createPDFCoverPrompt 
 } from "./openai";
+import PDFDocument from "pdfkit";
 
 // Simple in-memory cache for generated images
 const imageCache = new Map<string, string>();
@@ -115,14 +116,49 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/resume/download", async (_req, res) => {
     try {
       const resumeData = await storage.getResumeData();
-      
-      // For now, return a simple response indicating PDF generation would happen here
-      // In production, you'd use Puppeteer/Playwright to generate the actual PDF
-      res.json({ 
-        message: "PDF generation endpoint - would generate PDF with Puppeteer in production",
-        data: resumeData 
+      const doc = new PDFDocument({ margin: 50 });
+
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        'attachment; filename="resume.pdf"',
+      );
+
+      doc.pipe(res);
+
+      doc.fontSize(26).text(resumeData.name, { align: "center" });
+      doc.fontSize(16).fillColor("#666666").text(resumeData.role, { align: "center" });
+      doc.moveDown().fillColor("#000000").fontSize(12).text(resumeData.bio, {
+        align: "left",
       });
+
+      doc.moveDown().fontSize(16).text("Experience", { underline: true });
+      resumeData.experience.forEach((exp) => {
+        doc
+          .moveDown(0.5)
+          .fontSize(14)
+          .font("Helvetica-Bold")
+          .text(exp.position);
+        doc.font("Helvetica").fontSize(12).text(`${exp.company} • ${exp.period}`);
+        doc.moveDown(0.2).text(exp.description);
+      });
+
+      if (resumeData.skills.length) {
+        doc.moveDown().fontSize(16).text("Skills", { underline: true });
+        doc.fontSize(12).list(resumeData.skills, { bulletRadius: 2 });
+      }
+
+      doc.moveDown().fontSize(16).text("Contact", { underline: true });
+      doc
+        .fontSize(12)
+        .text(`Email: ${resumeData.social.email}`)
+        .text(`GitHub: ${resumeData.social.github || "N/A"}`)
+        .text(`LinkedIn: ${resumeData.social.linkedin || "N/A"}`)
+        .text(`Twitter: ${resumeData.social.twitter || "N/A"}`);
+
+      doc.end();
     } catch (error) {
+      console.error("PDF generation error:", error);
       res.status(500).json({ error: "Failed to generate PDF" });
     }
   });
