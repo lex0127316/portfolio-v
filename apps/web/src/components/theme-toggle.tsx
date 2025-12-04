@@ -24,7 +24,7 @@ export function ThemeToggle({ className }: { className?: string }) {
         aria-hidden
         tabIndex={-1}
         className={cn(
-          "relative flex h-10 w-18 items-center justify-between rounded-full border border-border bg-card px-2 text-sm font-medium text-foreground opacity-0",
+          "relative inline-flex h-10 w-[4.5rem] items-center rounded-full border border-border bg-card px-2 opacity-0",
           className,
         )}
       >
@@ -40,18 +40,30 @@ export function ThemeToggle({ className }: { className?: string }) {
       aria-pressed={isDark}
       aria-label="Toggle dark mode"
       className={cn(
-        "relative flex h-10 w-18 items-center justify-between rounded-full border border-border bg-card px-2 text-sm font-medium text-foreground shadow-sm transition hover:border-primary",
+        "group relative inline-flex h-10 w-[4.5rem] items-center rounded-full border border-border bg-card p-1 text-foreground shadow-sm transition hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         className,
       )}
     >
       <motion.span
         layout
-        className="absolute inset-y-1 h-8 w-8 rounded-full bg-primary shadow-lg"
-        transition={{ type: "spring", stiffness: 400, damping: 26 }}
-        style={{ left: isDark ? "calc(50% + 0.25rem)" : "0.25rem" }}
+        animate={{ x: isDark ? 32 : 0 }}
+        className="pointer-events-none absolute inset-y-1 left-1 h-8 w-8 rounded-full bg-primary shadow-lg group-active:scale-[0.97]"
+        transition={{ type: "spring", stiffness: 380, damping: 28 }}
       />
-      <Sun className={cn("z-10 h-4 w-4", { "text-muted-foreground": isDark })} />
-      <Moon className={cn("z-10 h-4 w-4", { "text-muted-foreground": !isDark })} />
+      <span className="relative z-10 flex w-full items-center justify-between px-1.5 text-xs font-semibold uppercase tracking-wider">
+        <Sun
+          className={cn("h-4 w-4 transition-colors", {
+            "text-background": !isDark,
+            "text-muted-foreground": isDark,
+          })}
+        />
+        <Moon
+          className={cn("h-4 w-4 transition-colors", {
+            "text-muted-foreground": !isDark,
+            "text-background": isDark,
+          })}
+        />
+      </span>
       <span className="sr-only">
         {isDark ? "Switch to light theme" : "Switch to dark theme"}
       </span>
