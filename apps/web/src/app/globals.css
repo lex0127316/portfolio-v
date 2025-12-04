@@ -200,3 +200,144 @@
     background-position: 200%;
   }
 }
+
+.theme-loader {
+  --loader-size: 110px;
+  --loader-time: 2s;
+  --loader-color-one: hsl(var(--primary));
+  --loader-color-two: color-mix(in srgb, hsl(var(--primary)) 55%, hsl(var(--accent)));
+  --loader-color-three: color-mix(in srgb, hsl(var(--primary)) 30%, transparent);
+  --loader-color-four: color-mix(in srgb, hsl(var(--primary)) 15%, transparent);
+  position: relative;
+  width: var(--loader-size);
+  height: var(--loader-size);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateZ(0);
+  box-shadow:
+    0 0 25px 0 var(--loader-color-three),
+    0 20px 50px 0 var(--loader-color-four);
+  animation: theme-loader-colorize calc(var(--loader-time) * 3) ease-in-out infinite;
+}
+
+.theme-loader::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border-top: 1px solid var(--loader-color-one);
+  border-bottom: 1px solid var(--loader-color-two);
+  background: linear-gradient(180deg, var(--loader-color-four), var(--loader-color-three));
+  box-shadow:
+    inset 0 10px 10px 0 var(--loader-color-three),
+    inset 0 -10px 10px 0 var(--loader-color-four);
+}
+
+.theme-loader__box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--loader-color-one) 30%, var(--loader-color-two) 70%);
+}
+
+.theme-loader__svg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.theme-loader__mask {
+  filter: contrast(15);
+  animation: theme-loader-roundness calc(var(--loader-time) / 2) linear infinite;
+}
+
+.theme-loader__mask polygon {
+  filter: blur(7px);
+}
+
+.theme-loader__mask polygon:nth-of-type(1) {
+  transform-origin: 75% 25%;
+  transform: rotate(90deg);
+}
+
+.theme-loader__mask polygon:nth-of-type(2) {
+  transform-origin: 50% 50%;
+  animation: theme-loader-rotation var(--loader-time) linear infinite reverse;
+}
+
+.theme-loader__mask polygon:nth-of-type(3) {
+  transform-origin: 50% 60%;
+  animation: theme-loader-rotation var(--loader-time) linear infinite;
+  animation-delay: calc(var(--loader-time) / -3);
+}
+
+.theme-loader__mask polygon:nth-of-type(4),
+.theme-loader__mask polygon:nth-of-type(5) {
+  transform-origin: 40% 40%;
+  animation: theme-loader-rotation var(--loader-time) linear infinite reverse;
+}
+
+.theme-loader__mask polygon:nth-of-type(5) {
+  animation-delay: calc(var(--loader-time) / -2);
+}
+
+.theme-loader__mask polygon:nth-of-type(6),
+.theme-loader__mask polygon:nth-of-type(7) {
+  transform-origin: 60% 40%;
+  animation: theme-loader-rotation var(--loader-time) linear infinite;
+}
+
+.theme-loader__mask polygon:nth-of-type(7) {
+  animation-delay: calc(var(--loader-time) / -1.5);
+}
+
+@keyframes theme-loader-rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes theme-loader-roundness {
+  0% {
+    filter: contrast(15);
+  }
+  20% {
+    filter: contrast(3);
+  }
+  40% {
+    filter: contrast(3);
+  }
+  60% {
+    filter: contrast(15);
+  }
+  100% {
+    filter: contrast(15);
+  }
+}
+
+@keyframes theme-loader-colorize {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  20% {
+    filter: hue-rotate(-30deg);
+  }
+  40% {
+    filter: hue-rotate(-60deg);
+  }
+  60% {
+    filter: hue-rotate(-90deg);
+  }
+  80% {
+    filter: hue-rotate(-45deg);
+  }
+  100% {
+    filter: hue-rotate(0deg);
+  }
+}

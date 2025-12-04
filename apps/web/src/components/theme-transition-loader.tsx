@@ -8,12 +8,12 @@ import {
   THEME_TRANSITION_START_EVENT,
 } from "@/lib/theme";
 import { cn } from "@/lib/cn";
-
 export function ThemeTransitionLoader() {
   const [isVisible, setIsVisible] = React.useState(false);
   const hideTimeoutRef = React.useRef<number | null>(null);
   const rafRef = React.useRef<number | null>(null);
   const prefersReducedMotionRef = React.useRef(false);
+  const maskId = React.useId();
 
   React.useEffect(() => {
     if (typeof window === "undefined") {
@@ -100,14 +100,50 @@ export function ThemeTransitionLoader() {
     <div
       aria-hidden={!isVisible}
       className={cn(
-        "fixed inset-0 z-[2147483200] flex items-center justify-center bg-background/80 backdrop-blur-sm transition-opacity duration-150 ease-out",
+        "fixed inset-0 z-[2147483200] flex items-center justify-center bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/55 transition-opacity duration-150 ease-out",
         isVisible ? "opacity-100 pointer-events-auto" : "pointer-events-none opacity-0",
       )}
     >
-      <span className="sr-only">Switching theme</span>
-      <div className="flex items-center justify-center">
-        <div className="h-12 w-12 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
+      <div
+        role="status"
+        aria-live="polite"
+        className={cn(
+          "flex flex-col items-center text-center transition-all duration-300",
+          isVisible ? "scale-100 opacity-100" : "scale-95 opacity-0",
+        )}
+      >
+        <LoaderVisual maskId={maskId} />
+        <p className="mt-6 text-[0.62rem] font-semibold uppercase tracking-[0.55em] text-muted-foreground">
+          Harmonizing palette
+        </p>
       </div>
+    </div>
+  );
+}
+
+function LoaderVisual({ maskId }: { maskId: string }) {
+  return (
+    <div className="theme-loader">
+      <svg className="theme-loader__svg" width="100" height="100" viewBox="0 0 100 100" aria-hidden>
+        <defs>
+          <mask id={maskId} className="theme-loader__mask">
+            <rect width="100" height="100" fill="black" />
+            <polygon points="25,25 75,25 50,75" fill="white" />
+            <polygon points="50,25 75,75 25,75" fill="white" />
+            <polygon points="35,35 65,35 50,65" fill="white" />
+            <polygon points="35,35 65,35 50,65" fill="white" />
+            <polygon points="35,35 65,35 50,65" fill="white" />
+            <polygon points="35,35 65,35 50,65" fill="white" />
+          </mask>
+        </defs>
+      </svg>
+      <div
+        className="theme-loader__box"
+        style={{
+          mask: `url(#${maskId})`,
+          WebkitMask: `url(#${maskId})`,
+        }}
+      />
     </div>
   );
 }
