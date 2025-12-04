@@ -20,8 +20,7 @@ export const fallbackProjects: Project[] = [
     subtitle: "Spatial AI research platform",
     description:
       "Command-center for climate researchers with multi-layer 3D cartography, GPU-powered analytics, and real-time collaboration powered by CRDTs.",
-    preview:
-      "https://images.unsplash.com/photo-1482192597420-4817fdd7e8b0?auto=format&fit=crop&w=1200&q=80",
+    preview: "/projects/project-1.svg",
     tech: ["Next.js 16", "Three.js", "Turbopack", "Wasmtime"],
     metrics: "↑ 38% research throughput · 420ms median query",
     year: "2025",
@@ -35,8 +34,7 @@ export const fallbackProjects: Project[] = [
     subtitle: "AI-native founder cockpit",
     description:
       "Composable operating system for post-product-market-fit founders: AI copilots, KPI command palette, and event-driven automations.",
-    preview:
-      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
+    preview: "/projects/project-2.svg",
     tech: ["Next.js", "Convex", "LangGraph", "Edge Functions"],
     metrics: "↓ 64% ops toil · 11k weekly automations",
     year: "2024",
@@ -50,8 +48,7 @@ export const fallbackProjects: Project[] = [
     subtitle: "Immersive retail twin",
     description:
       "Three.js-powered retail twin with volumetric renders, predictive inventory, and GSAP microinteractions tuned for 144hz displays.",
-    preview:
-      "https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=1200&q=80",
+    preview: "/projects/project-3.svg",
     tech: ["Three.js", "GSAP", "Cloudflare Workers"],
     metrics: "↑ 52% conversion · 99 Lighthouse performance",
     year: "2024",
@@ -65,8 +62,7 @@ export const fallbackProjects: Project[] = [
     subtitle: "Realtime collaboration canvas",
     description:
       "WebGPU canvas for systems teams to storyboard complex infra rollouts, synced via WebRTC mesh and resilient CRDT storage.",
-    preview:
-      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
+    preview: "/projects/project-4.svg",
     tech: ["Next.js", "WebGPU", "Liveblocks", "Tailwind"],
     metrics: "250k frames/sim · 0 dropped frames on M3",
     year: "2023",
