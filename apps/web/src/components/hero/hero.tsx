@@ -1,0 +1,127 @@
+"use client";
+
+import dynamic from "next/dynamic";
+import * as React from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ArrowRight, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { MagneticButton } from "@/components/micro/magnetic-button";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(useGSAP);
+}
+
+const DynamicHeroScene = dynamic(
+  () => import("./three-hero").then((mod) => mod.HeroScene),
+  {
+    ssr: false,
+    loading: () => <div className="h-64 w-full animate-pulse rounded-3xl bg-gradient-to-br from-muted to-card" />,
+  },
+);
+
+type HeroProps = {
+  hero: {
+    headline: string;
+    subheadline: string;
+    specialties: string[];
+    availability?: string;
+  };
+  stats: {
+    shipped: string;
+    performance: string;
+    githubStars: string;
+  };
+};
+
+export function Hero({ hero, stats }: HeroProps) {
+  const textRef = React.useRef<HTMLDivElement>(null);
+  useGSAP(
+    () => {
+      if (!textRef.current) {
+        return;
+      }
+      gsap.from(textRef.current.querySelectorAll("[data-reveal='text']"), {
+        opacity: 0,
+        y: 24,
+        duration: 0.9,
+        stagger: 0.08,
+        ease: "power3.out",
+      });
+    },
+    { scope: textRef },
+  );
+
+  return (
+    <section className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-background via-background/60 to-background/20 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] sm:p-10">
+      <div className="gradient-backdrop" aria-hidden />
+      <div className="relative grid gap-10 md:grid-cols-[1.1fr_0.9fr]" ref={textRef}>
+        <div className="space-y-6">
+          <div className="inline-flex items-center gap-2 rounded-full border border-border/50 bg-card px-4 py-1 text-xs uppercase tracking-[0.3em] text-muted-foreground">
+            <Sparkles className="h-4 w-4 text-primary" />
+            Available for selective partnerships
+          </div>
+          <div className="space-y-4">
+            <h1
+              data-reveal="text"
+              className="text-4xl font-semibold leading-tight text-balance sm:text-5xl"
+            >
+              {hero.headline}
+            </h1>
+            <p data-reveal="text" className="text-base text-muted-foreground sm:text-lg">
+              {hero.subheadline}
+            </p>
+            <ul className="flex flex-wrap gap-2 text-sm text-muted-foreground">
+              {hero.specialties.map((item) => (
+                <li key={item} className="rounded-full border border-border/50 px-4 py-1">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="flex flex-wrap gap-4" data-reveal="text">
+            <MagneticButton icon={<ArrowRight className="h-4 w-4" />}>
+              Book a build week
+            </MagneticButton>
+            <Button variant="outline" className="rounded-full border-dashed border-border/70">
+              Download resume
+            </Button>
+          </div>
+          {hero.availability && (
+            <p data-reveal="text" className="text-sm text-muted-foreground">
+              {hero.availability}
+            </p>
+          )}
+          <div className="grid grid-cols-3 gap-4" data-reveal="text">
+            <Stat label="Products shipped" value={stats.shipped} />
+            <Stat label="Performance budget" value={stats.performance} />
+            <Stat label="Community stars" value={stats.githubStars} />
+          </div>
+        </div>
+
+        <div className="relative">
+          <div className="absolute inset-0 blur-3xl bg-gradient-to-br from-blue-500/30 via-indigo-400/20 to-purple-500/30" />
+          <div className="relative rounded-[2rem] border border-white/10 bg-black/40 p-1 shadow-2xl backdrop-blur-xl">
+            <div className="rounded-[1.7rem] border border-white/5 bg-black/50 p-6">
+              <DynamicHeroScene />
+            </div>
+          </div>
+          <div className="mt-4 grid gap-2 rounded-2xl border border-border/60 bg-card/70 p-4 text-sm text-muted-foreground">
+            <p className="font-semibold text-foreground">Cinematic WebGL built for focus</p>
+            <p>Three.js + GSAP orchestrated for 120hz displays, with reduced-motion fallbacks.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-2xl border border-border/60 bg-card/70 p-4">
+      <p className="text-xs uppercase text-muted-foreground">{label}</p>
+      <p className="text-2xl font-semibold">{value}</p>
+    </div>
+  );
+}
+
