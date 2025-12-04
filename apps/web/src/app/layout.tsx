@@ -7,6 +7,7 @@ import { Footer } from "@/components/footer";
 import { ScrollIndicator } from "@/components/micro/scroll-indicator";
 import { FluidCursor } from "@/components/micro/fluid-cursor";
 import { NeuralBg } from "@/components/backgrounds/neural-bg";
+import { ThemeTransitionLoader } from "@/components/theme-transition-loader";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/cn";
 import { DARK_MODE_CLASS, LIGHT_MODE_CLASS, THEME_STORAGE_KEY } from "@/lib/theme";
@@ -128,6 +129,7 @@ export default function RootLayout({
       >
         <script dangerouslySetInnerHTML={{ __html: themeInitializer }} suppressHydrationWarning />
         <ThemeProvider>
+          <ThemeTransitionLoader />
           <ScrollIndicator />
           <FluidCursor className="hidden md:block" />
           <NeuralBg className="opacity-90" />

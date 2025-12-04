@@ -46,10 +46,10 @@
   --font-serif: "Playfair Display", Georgia, serif;
   --font-mono: "JetBrains Mono", monospace;
   --radius: 0.5rem;
-  --theme-transition-duration: 550ms;
+  --theme-transition-duration: 450ms;
   --theme-transition-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --theme-overlay-duration-in: 220ms;
-  --theme-overlay-duration-out: 320ms;
+  --theme-overlay-duration-in: 150ms;
+  --theme-overlay-duration-out: 250ms;
   --theme-overlay-color: hsl(var(--background));
   --theme-transition-elements: background-color, border-color, color, fill, stroke, box-shadow, opacity;
 }
