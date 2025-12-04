@@ -11,13 +11,17 @@ type NeuralBgProps = {
   hue?: number;
   saturation?: number;
   chroma?: number;
+  animationSpeed?: number;
+  colorShift?: number;
   className?: string;
 };
 
 export function NeuralBg({
-  hue = 200,
-  saturation = 0.8,
-  chroma = 0.6,
+  hue = 208,
+  saturation = 0.78,
+  chroma = 0.58,
+  animationSpeed = 0.00028,
+  colorShift = 0.08,
   className,
 }: NeuralBgProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -28,6 +32,8 @@ export function NeuralBg({
       hue,
       saturation,
       chroma,
+      animationSpeed,
+      colorShift,
     });
 
     return () => {
@@ -47,6 +53,14 @@ export function NeuralBg({
   useEffect(() => {
     controllerRef.current?.setChroma(chroma);
   }, [chroma]);
+
+  useEffect(() => {
+    controllerRef.current?.setAnimationSpeed?.(animationSpeed);
+  }, [animationSpeed]);
+
+  useEffect(() => {
+    controllerRef.current?.setColorShift?.(colorShift);
+  }, [colorShift]);
 
   return (
     <canvas

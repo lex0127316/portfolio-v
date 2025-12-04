@@ -13,12 +13,16 @@ export type NeuralBackgroundOptions = {
   hue?: number;
   saturation?: number;
   chroma?: number;
+  animationSpeed?: number;
+  colorShift?: number;
 };
 
 export type NeuralBackgroundController = {
   setHue: (value: number) => void;
   setSaturation: (value: number) => void;
   setChroma: (value: number) => void;
+  setAnimationSpeed: (value: number) => void;
+  setColorShift: (value: number) => void;
   destroy: () => void;
 };
 
@@ -47,6 +51,8 @@ const fragmentShader = `
   uniform float u_hue;
   uniform float u_saturation;
   uniform float u_chroma;
+  uniform float u_time_factor;
+  uniform float u_color_shift;
 
   vec2 rotate(vec2 uv, float th) {
       return mat2(cos(th), sin(th), -sin(th), cos(th)) * uv;
@@ -82,7 +88,7 @@ const fragmentShader = `
       float p = clamp(length(pointer), 0., 1.);
       p = .5 * pow(1. - p, 2.);
 
-      float t = .001 * u_time;
+      float t = u_time_factor * u_time;
       vec3 color = vec3(0.);
 
       float noise = neuro_shape(uv, t, p);
@@ -94,13 +100,32 @@ const fragmentShader = `
 
       float normalizedHue = u_hue / 360.0;
 
+      float pointerInfluence = clamp(1.0 - p * 1.5, 0.0, 1.0);
+      float timeHueShift = 0.06 * sin(0.3 * u_scroll_progress + u_time * 0.00005);
+      float pointerHueShift = mix(-0.12, 0.12, pointerInfluence);
+      float dynamicHue = fract(normalizedHue + u_color_shift + timeHueShift + pointerHueShift);
+
+      float dynamicSaturation = clamp(
+          u_saturation + 0.2 * pointerInfluence - 0.1 * noise,
+          0.0,
+          1.0
+      );
+
+      float baseLightness = u_chroma * 0.55 + 0.15 * noise;
+      float dynamicLightness = clamp(
+          baseLightness + 0.25 * pointerInfluence + 0.1 * sin(u_scroll_progress * 1.5 + noise),
+          0.08,
+          0.95
+      );
+
       vec3 hsl = vec3(
-          normalizedHue + 0.1 * sin(3.0 * u_scroll_progress + 1.5),
-          u_saturation,
-          u_chroma * 0.5 + 0.2 * sin(2.0 * u_scroll_progress)
+          dynamicHue,
+          dynamicSaturation,
+          dynamicLightness
       );
 
       color = hsl2rgb(hsl);
+      color = mix(color * 0.7, color, min(1.0, noise + 0.3));
       color = color * noise;
 
       gl_FragColor = vec4(color, noise);
@@ -109,7 +134,13 @@ const fragmentShader = `
 
 export function createNeuralBackground(
   canvas: HTMLCanvasElement | null,
-  { hue = 200, saturation = 0.8, chroma = 0.6 }: NeuralBackgroundOptions = {},
+  {
+    hue = 200,
+    saturation = 0.8,
+    chroma = 0.6,
+    animationSpeed = 0.00028,
+    colorShift = 0.08,
+  }: NeuralBackgroundOptions = {},
 ): NeuralBackgroundController | null {
   if (!canvas || typeof window === "undefined") {
     return null;
@@ -171,6 +202,8 @@ export function createNeuralBackground(
           u_hue: { value: hue },
           u_saturation: { value: saturation },
           u_chroma: { value: chroma },
+          u_time_factor: { value: Math.max(0.00005, animationSpeed) },
+          u_color_shift: { value: colorShift },
         },
       });
 
@@ -241,7 +274,14 @@ export function createNeuralBackground(
     resizeObserver.observe(canvas);
   }
 
-  const setUniform = (uniform: "u_hue" | "u_saturation" | "u_chroma", value: number) => {
+  type NumericUniform =
+    | "u_hue"
+    | "u_saturation"
+    | "u_chroma"
+    | "u_time_factor"
+    | "u_color_shift";
+
+  const setUniform = (uniform: NumericUniform, value: number) => {
     if (mesh?.program?.uniforms?.[uniform]) {
       mesh.program.uniforms[uniform].value = value;
     }
@@ -268,6 +308,9 @@ export function createNeuralBackground(
     setHue: (value: number) => setUniform("u_hue", value),
     setSaturation: (value: number) => setUniform("u_saturation", value),
     setChroma: (value: number) => setUniform("u_chroma", value),
+    setAnimationSpeed: (value: number) =>
+      setUniform("u_time_factor", Math.max(0.00005, value)),
+    setColorShift: (value: number) => setUniform("u_color_shift", value),
     destroy,
   };
 }
