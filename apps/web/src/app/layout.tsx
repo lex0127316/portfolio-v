@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { ScrollIndicator } from "@/components/micro/scroll-indicator";
+import { FluidCursor } from "@/components/micro/fluid-cursor";
+import { NeuralBg } from "@/components/backgrounds/neural-bg";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/cn";
 
@@ -101,6 +103,8 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <ScrollIndicator />
+          <FluidCursor className="hidden md:block" />
+          <NeuralBg className="opacity-90" />
           <a
             href="#main-content"
             className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"

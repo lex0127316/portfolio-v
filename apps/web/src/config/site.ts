@@ -11,7 +11,7 @@ export const siteConfig = {
     "Three.js",
     "GSAP",
     "React",
-    "AI",
+    "AI", 
     "Portfolio",
   ],
   location: "Remote · London",
