@@ -1,24 +1,55 @@
 "use client";
 
 import * as React from "react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  type MotionStyle,
+} from "framer-motion";
 import { cn } from "@/lib/cn";
 
-type MagneticButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+type MagneticButtonProps = React.ComponentPropsWithoutRef<typeof motion.button> & {
   icon?: React.ReactNode;
+  speed?: number;
 };
 
 export function MagneticButton({
   children,
   className,
   icon,
+  speed = 2,
+  type = "button",
   ...props
 }: MagneticButtonProps) {
+  const content = children as React.ReactNode;
   const ref = React.useRef<HTMLButtonElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotateX = useTransform(y, [-15, 15], [6, -6]);
   const rotateY = useTransform(x, [-15, 15], [-6, 6]);
+  const normalizedSpeed = Math.max(0.2, speed);
+
+  const cssVarStyles = React.useMemo(
+    () =>
+      ({
+        "--color-1": "hsl(0 100% 63%)",
+        "--color-2": "hsl(270 100% 63%)",
+        "--color-3": "hsl(210 100% 63%)",
+        "--color-4": "hsl(195 100% 63%)",
+        "--color-5": "hsl(90 100% 63%)",
+        "--speed": `${normalizedSpeed}s`,
+      }) as React.CSSProperties,
+    [normalizedSpeed],
+  );
+
+  const buttonStyle: MotionStyle = {
+    ...cssVarStyles,
+    x,
+    y,
+    rotateX,
+    rotateY,
+  };
 
   const handleMouseMove = (event: React.MouseEvent<HTMLButtonElement>) => {
     const element = ref.current;
@@ -40,24 +71,27 @@ export function MagneticButton({
   return (
     <motion.button
       ref={ref}
-      type="button"
+      type={type}
       className={cn(
-        "group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-border bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[0_10px_40px_rgba(59,130,246,0.35)] transition hover:border-primary/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        "group relative inline-flex h-11 cursor-pointer items-center justify-center rounded-xl border-0 px-8 py-2 text-sm font-semibold text-white dark:text-neutral-900 transition-[color,transform] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+        "shadow-[0_12px_40px_rgba(17,17,17,0.25)] dark:shadow-[0_15px_55px_rgba(0,0,0,0.65)]",
+        "bg-[length:200%] [background-clip:padding-box,border-box,border-box] [background-origin:border-box] [border:calc(0.08*1rem)_solid_transparent]",
+        "bg-[linear-gradient(#121213,#121213),linear-gradient(#121213_50%,rgba(18,18,19,0.6)_80%,rgba(18,18,19,0)),linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))]",
+        "dark:bg-[linear-gradient(#fff,#fff),linear-gradient(#fff_50%,rgba(255,255,255,0.6)_80%,rgba(0,0,0,0)),linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))]",
+        "[animation:rainbow_var(--speed)_linear_infinite]",
+        "before:pointer-events-none before:absolute before:bottom-[-20%] before:left-1/2 before:z-0 before:h-1/5 before:w-3/5 before:-translate-x-1/2 before:rounded-full before:opacity-70 before:content-['']",
+        "before:bg-[linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))] before:bg-[length:200%] before:[animation:rainbow_var(--speed)_linear_infinite] before:[filter:blur(calc(0.8*1rem))]",
         className,
       )}
-      style={{ x, y, rotateX, rotateY }}
+      style={buttonStyle}
       onMouseMove={handleMouseMove}
       onMouseLeave={reset}
       onBlur={reset}
       {...props}
     >
-      <motion.span
-        aria-hidden
-        className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-sky-400/30 to-purple-500/20 opacity-0 transition group-hover:opacity-100"
-      />
-      <span className="relative flex items-center gap-2">
-        {icon && <span className="text-lg">{icon}</span>}
-        {children}
+      <span className="relative z-10 flex items-center gap-2">
+        {icon && <span className="text-lg leading-none" aria-hidden>{icon}</span>}
+        <span>{content}</span>
       </span>
     </motion.button>
   );
