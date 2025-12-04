@@ -9,13 +9,29 @@ import { cn } from "@/lib/cn";
 export function ThemeToggle({ className }: { className?: string }) {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
-  const isDark = (theme ?? resolvedTheme) === "dark";
+  const isDark = mounted ? (theme ?? resolvedTheme) === "dark" : false;
 
   React.useEffect(() => setMounted(true), []);
 
   const handleToggle = () => {
     setTheme(isDark ? "light" : "dark");
   };
+
+  if (!mounted) {
+    return (
+      <button
+        type="button"
+        aria-hidden
+        tabIndex={-1}
+        className={cn(
+          "relative flex h-10 w-18 items-center justify-between rounded-full border border-border bg-card px-2 text-sm font-medium text-foreground opacity-0",
+          className,
+        )}
+      >
+        <span className="sr-only">Toggle dark mode</span>
+      </button>
+    );
+  }
 
   return (
     <button
@@ -36,11 +52,9 @@ export function ThemeToggle({ className }: { className?: string }) {
       />
       <Sun className={cn("z-10 h-4 w-4", { "text-muted-foreground": isDark })} />
       <Moon className={cn("z-10 h-4 w-4", { "text-muted-foreground": !isDark })} />
-      {!mounted && (
-        <span className="sr-only">
-          {isDark ? "Switch to light theme" : "Switch to dark theme"}
-        </span>
-      )}
+      <span className="sr-only">
+        {isDark ? "Switch to light theme" : "Switch to dark theme"}
+      </span>
     </button>
   );
 }
