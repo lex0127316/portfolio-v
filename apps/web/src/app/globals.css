@@ -3,39 +3,40 @@
 @tailwind utilities;
 
 :root {
-  --button-outline: rgba(0, 0, 0, 0.1);
-  --badge-outline: rgba(0, 0, 0, 0.05);
-  --opaque-button-border-intensity: -8;
-  --elevate-1: rgba(0, 0, 0, 0.03);
-  --elevate-2: rgba(0, 0, 0, 0.08);
-  --background: 0 0% 100%;
-  --foreground: 0 0% 9%;
-  --border: 0 0% 91%;
-  --card: 0 0% 98%;
-  --card-foreground: 0 0% 9%;
-  --card-border: 0 0% 94%;
-  --sidebar: 0 0% 96%;
-  --sidebar-foreground: 0 0% 9%;
-  --sidebar-border: 0 0% 92%;
+  color-scheme: light;
+  --button-outline: rgba(15, 23, 42, 0.08);
+  --badge-outline: rgba(15, 23, 42, 0.04);
+  --opaque-button-border-intensity: -6;
+  --elevate-1: rgba(15, 23, 42, 0.03);
+  --elevate-2: rgba(15, 23, 42, 0.08);
+  --background: 210 33% 98%;
+  --foreground: 222 47% 12%;
+  --border: 215 28% 88%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 12%;
+  --card-border: 215 28% 90%;
+  --sidebar: 210 40% 97%;
+  --sidebar-foreground: 222 47% 14%;
+  --sidebar-border: 213 27% 85%;
   --sidebar-primary: 221 83% 53%;
   --sidebar-primary-foreground: 221 83% 98%;
-  --sidebar-accent: 0 0% 90%;
-  --sidebar-accent-foreground: 0 0% 9%;
+  --sidebar-accent: 215 28% 90%;
+  --sidebar-accent-foreground: 222 47% 18%;
   --sidebar-ring: 221 83% 53%;
-  --popover: 0 0% 94%;
-  --popover-foreground: 0 0% 9%;
-  --popover-border: 0 0% 90%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 14%;
+  --popover-border: 213 27% 88%;
   --primary: 221 83% 53%;
   --primary-foreground: 221 83% 98%;
-  --secondary: 0 0% 88%;
-  --secondary-foreground: 0 0% 9%;
-  --muted: 0 0% 90%;
-  --muted-foreground: 0 0% 35%;
-  --accent: 220 14% 92%;
-  --accent-foreground: 0 0% 9%;
-  --destructive: 0 84% 48%;
-  --destructive-foreground: 0 84% 98%;
-  --input: 0 0% 82%;
+  --secondary: 210 20% 92%;
+  --secondary-foreground: 222 47% 20%;
+  --muted: 214 32% 92%;
+  --muted-foreground: 220 15% 38%;
+  --accent: 208 100% 96%;
+  --accent-foreground: 222 47% 15%;
+  --destructive: 0 84% 46%;
+  --destructive-foreground: 0 0% 100%;
+  --input: 213 27% 84%;
   --ring: 221 83% 53%;
   --chart-1: 221 83% 45%;
   --chart-2: 262 83% 48%;
@@ -54,6 +55,10 @@
   --theme-transition-elements: background-color, border-color, color, fill, stroke, box-shadow, opacity;
 }
 
+.light-mode {
+  color-scheme: light;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
@@ -61,6 +66,7 @@
 }
 
 .dark-mode {
+  color-scheme: dark;
   --button-outline: rgba(255, 255, 255, 0.1);
   --badge-outline: rgba(255, 255, 255, 0.05);
   --opaque-button-border-intensity: 9;

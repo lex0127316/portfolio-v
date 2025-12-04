@@ -53,7 +53,7 @@ export function Hero({ hero, stats }: HeroProps) {
   );
 
   return (
-    <section className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-background via-background/60 to-background/20 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] sm:p-10">
+    <section className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-white via-white/70 to-sky-50/60 p-6 shadow-[0_30px_110px_rgba(15,23,42,0.1)] dark:from-background dark:via-background/60 dark:to-background/20 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] sm:p-10">
       <div className="gradient-backdrop" aria-hidden />
       <div className="relative grid gap-10 md:grid-cols-[1.1fr_0.9fr]" ref={textRef}>
         <div className="space-y-6">
@@ -100,9 +100,9 @@ export function Hero({ hero, stats }: HeroProps) {
         </div>
 
         <div className="relative">
-          <div className="absolute inset-0 blur-3xl bg-gradient-to-br from-blue-500/30 via-indigo-400/20 to-purple-500/30" />
-          <div className="relative rounded-[2rem] border border-white/10 bg-black/40 p-1 shadow-2xl backdrop-blur-xl">
-            <div className="rounded-[1.7rem] border border-white/5 bg-black/50 p-6">
+          <div className="absolute inset-0 blur-3xl bg-gradient-to-br from-sky-300/40 via-indigo-200/35 to-purple-200/30 dark:from-blue-500/30 dark:via-indigo-400/20 dark:to-purple-500/30" />
+          <div className="relative rounded-[2rem] border border-slate-200/70 bg-white/85 p-1 shadow-[0_35px_120px_rgba(15,23,42,0.16)] backdrop-blur-xl dark:border-white/10 dark:bg-black/40 dark:shadow-2xl">
+            <div className="rounded-[1.7rem] border border-white/80 bg-white p-6 shadow-inner shadow-slate-200/80 dark:border-white/5 dark:bg-black/50 dark:shadow-none">
               <DynamicHeroScene />
             </div>
           </div>

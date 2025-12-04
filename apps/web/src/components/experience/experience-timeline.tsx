@@ -48,11 +48,11 @@ export function ExperienceTimeline({ items = experienceTimeline }: Props) {
 
   return (
     <section id="about" className="space-y-8" ref={containerRef}>
-      <div className="flex flex-col gap-4">
+      <div className="relative isolate flex flex-col gap-4 rounded-[2rem] border border-white/70 bg-white/95 p-6 shadow-[0_25px_80px_rgba(15,23,42,0.12)] backdrop-blur dark:border-border/60 dark:bg-card/80 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
         <p className="text-sm uppercase tracking-[0.4em] text-muted-foreground">
           Trajectory
         </p>
-        <h2 className="text-3xl font-semibold">11+ years building futures at scale</h2>
+        <h2 className="text-3xl font-semibold text-foreground">11+ years building futures at scale</h2>
         <p className="max-w-2xl text-base text-muted-foreground">
           From IDEO installations to Stripe’s dashboard and climate intelligence OSs, I partner
           deeply, measure obsessively, and lead with storytelling.

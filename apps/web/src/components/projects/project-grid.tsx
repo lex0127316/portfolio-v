@@ -14,9 +14,9 @@ type Props = {
 export function ProjectGrid({ projects = fallbackProjects, repos }: Props) {
   return (
     <section id="work" className="space-y-8">
-      <div className="flex flex-col gap-4">
+      <div className="relative isolate flex flex-col gap-4 rounded-[2rem] border border-white/70 bg-white/95 p-6 shadow-[0_25px_80px_rgba(15,23,42,0.12)] backdrop-blur dark:border-border/60 dark:bg-card/80 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
         <p className="text-sm uppercase tracking-[0.4em] text-muted-foreground">Selected Work</p>
-        <h2 className="text-3xl font-semibold">Pattern libraries for ambitious founders</h2>
+        <h2 className="text-3xl font-semibold text-foreground">Pattern libraries for ambitious founders</h2>
         <p className="max-w-2xl text-base text-muted-foreground">
           Each build blends performance budgets, cinematic aesthetics, and systems thinking. I pair
           Next.js App Router with GSAP + WebGL pipelines to prototype fast and ship confidently.
