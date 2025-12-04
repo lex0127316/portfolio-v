@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/cn";
+import { startThemeTransition } from "@/lib/theme";
 
 export function ThemeToggle({ className }: { className?: string }) {
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -14,7 +15,10 @@ export function ThemeToggle({ className }: { className?: string }) {
   React.useEffect(() => setMounted(true), []);
 
   const handleToggle = () => {
-    setTheme(isDark ? "light" : "dark");
+    const nextTheme = isDark ? "light" : "dark";
+    startThemeTransition({
+      applyTheme: () => setTheme(nextTheme),
+    });
   };
 
   if (!mounted) {

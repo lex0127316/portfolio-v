@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { cn } from "@/lib/cn";
+import { THEME_TRANSITION_END_EVENT, THEME_TRANSITION_START_EVENT } from "@/lib/theme";
 
 type ColorRGB = {
   r: number;
@@ -895,8 +896,20 @@ export function FluidCursor({
     let lastUpdateTime = Date.now();
     let colorUpdateTimer = 0;
     let frameId: number | null = null;
+    let isTransitioning = false;
+
+    const stopLoop = () => {
+      if (frameId !== null) {
+        cancelAnimationFrame(frameId);
+        frameId = null;
+      }
+    };
 
     const updateFrame = () => {
+      if (isTransitioning) {
+        stopLoop();
+        return;
+      }
       const dt = calcDeltaTime();
       if (resizeCanvas()) initFramebuffers();
       updateColors(dt);
@@ -904,6 +917,12 @@ export function FluidCursor({
       step(dt);
       render(null);
       frameId = requestAnimationFrame(updateFrame);
+    };
+
+    const startLoop = () => {
+      if (frameId === null && !isTransitioning) {
+        frameId = requestAnimationFrame(updateFrame);
+      }
     };
 
     const calcDeltaTime = () => {
@@ -1296,7 +1315,7 @@ export function FluidCursor({
       updatePointerUpData(pointer);
     };
 
-    updateFrame();
+    startLoop();
 
     window.addEventListener("mousedown", handleMouseDown);
     document.body.addEventListener("mousemove", handleFirstMouseMove);
@@ -1306,10 +1325,21 @@ export function FluidCursor({
     window.addEventListener("touchmove", handleTouchMove, { passive: true });
     window.addEventListener("touchend", handleTouchEnd);
 
+    const handleTransitionStart = () => {
+      isTransitioning = true;
+      stopLoop();
+    };
+
+    const handleTransitionEnd = () => {
+      isTransitioning = false;
+      startLoop();
+    };
+
+    window.addEventListener(THEME_TRANSITION_START_EVENT, handleTransitionStart);
+    window.addEventListener(THEME_TRANSITION_END_EVENT, handleTransitionEnd);
+
     return () => {
-      if (frameId) {
-        cancelAnimationFrame(frameId);
-      }
+      stopLoop();
       window.removeEventListener("mousedown", handleMouseDown);
       document.body.removeEventListener("mousemove", handleFirstMouseMove);
       window.removeEventListener("mousemove", handleMouseMove);
@@ -1317,6 +1347,8 @@ export function FluidCursor({
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener(THEME_TRANSITION_START_EVENT, handleTransitionStart);
+      window.removeEventListener(THEME_TRANSITION_END_EVENT, handleTransitionEnd);
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
   }, [

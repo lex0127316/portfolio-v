@@ -73,12 +73,8 @@ export function MagneticButton({
       ref={ref}
       type={type}
       className={cn(
-        "group relative inline-flex h-11 cursor-pointer items-center justify-center rounded-xl border-0 px-8 py-2 text-sm font-semibold text-white dark:text-neutral-900 transition-[color,transform] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
-        "shadow-[0_12px_40px_rgba(17,17,17,0.25)] dark:shadow-[0_15px_55px_rgba(0,0,0,0.65)]",
-        "bg-[length:200%] [background-clip:padding-box,border-box,border-box] [background-origin:border-box] [border:calc(0.08*1rem)_solid_transparent]",
-        "bg-[linear-gradient(#121213,#121213),linear-gradient(#121213_50%,rgba(18,18,19,0.6)_80%,rgba(18,18,19,0)),linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))]",
-        "dark:bg-[linear-gradient(#fff,#fff),linear-gradient(#fff_50%,rgba(255,255,255,0.6)_80%,rgba(0,0,0,0)),linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))]",
-        "[animation:rainbow_var(--speed)_linear_infinite]",
+        "group relative inline-flex h-11 cursor-pointer items-center justify-center overflow-hidden rounded-xl border-0 px-8 py-2 text-sm font-semibold text-white transition-[color,background,box-shadow,transform] duration-500 ease-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+        "shadow-[0_12px_40px_rgba(17,17,17,0.25)] dark:shadow-[0_15px_55px_rgba(0,0,0,0.65)] dark:text-neutral-900",
         "before:pointer-events-none before:absolute before:bottom-[-20%] before:left-1/2 before:z-0 before:h-1/5 before:w-3/5 before:-translate-x-1/2 before:rounded-full before:opacity-70 before:content-['']",
         "before:bg-[linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))] before:bg-[length:200%] before:[animation:rainbow_var(--speed)_linear_infinite] before:[filter:blur(calc(0.8*1rem))]",
         className,
@@ -89,6 +85,19 @@ export function MagneticButton({
       onBlur={reset}
       {...props}
     >
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-[1] overflow-hidden rounded-[inherit]"
+      >
+        <span
+          className="absolute inset-0 rounded-[inherit] bg-[linear-gradient(#121213,#121213),linear-gradient(#121213_50%,rgba(18,18,19,0.6)_80%,rgba(18,18,19,0)),linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))] opacity-100 transition-opacity duration-700 ease-out dark:opacity-0"
+          style={{ backgroundSize: "200%" }}
+        />
+        <span
+          className="absolute inset-0 rounded-[inherit] bg-[linear-gradient(#fff,#fff),linear-gradient(#fff_50%,rgba(255,255,255,0.6)_80%,rgba(0,0,0,0)),linear-gradient(90deg,var(--color-1),var(--color-5),var(--color-3),var(--color-4),var(--color-2))] opacity-0 transition-opacity duration-700 ease-out dark:opacity-100"
+          style={{ backgroundSize: "200%" }}
+        />
+      </span>
       <span className="relative z-10 flex items-center gap-2">
         {icon && <span className="text-lg leading-none" aria-hidden>{icon}</span>}
         <span>{content}</span>

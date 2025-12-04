@@ -3,7 +3,7 @@ import typography from "@tailwindcss/typography";
 import animatePlugin from "tailwindcss-animate";
 
 const config: Config = {
-  darkMode: ["class"],
+  darkMode: ["class", ".dark-mode"],
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {

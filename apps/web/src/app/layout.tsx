@@ -9,6 +9,7 @@ import { FluidCursor } from "@/components/micro/fluid-cursor";
 import { NeuralBg } from "@/components/backgrounds/neural-bg";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/cn";
+import { DARK_MODE_CLASS, LIGHT_MODE_CLASS, THEME_STORAGE_KEY } from "@/lib/theme";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -86,6 +87,29 @@ const structuredData = {
   sameAs: [siteConfig.social.github, siteConfig.social.linkedin, siteConfig.social.twitter],
 };
 
+const themeInitializer = `
+(() => {
+  try {
+    const storageKey = ${JSON.stringify(THEME_STORAGE_KEY)};
+    const lightClass = ${JSON.stringify(LIGHT_MODE_CLASS)};
+    const darkClass = ${JSON.stringify(DARK_MODE_CLASS)};
+    const stored = localStorage.getItem(storageKey);
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    const theme = stored === "dark" || stored === "light" ? stored : prefersDark;
+    const targetClass = theme === "dark" ? darkClass : lightClass;
+    const root = document.documentElement;
+    const body = document.body;
+    root.classList.remove(lightClass, darkClass);
+    root.classList.add(targetClass);
+    body.classList.remove(lightClass, darkClass);
+    body.classList.add(targetClass);
+  } catch (_error) {
+    document.documentElement.classList.add(${JSON.stringify(LIGHT_MODE_CLASS)});
+    document.body.classList.add(${JSON.stringify(LIGHT_MODE_CLASS)});
+  }
+})();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -99,8 +123,10 @@ export default function RootLayout({
           inter.variable,
           spaceGrotesk.variable,
           jetBrains.variable,
+          LIGHT_MODE_CLASS,
         )}
       >
+        <script dangerouslySetInnerHTML={{ __html: themeInitializer }} suppressHydrationWarning />
         <ThemeProvider>
           <ScrollIndicator />
           <FluidCursor className="hidden md:block" />

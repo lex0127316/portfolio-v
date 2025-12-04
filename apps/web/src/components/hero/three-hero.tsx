@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import * as THREE from "three";
+import { THEME_TRANSITION_END_EVENT, THEME_TRANSITION_START_EVENT } from "@/lib/theme";
 
 export function HeroScene() {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -131,6 +132,7 @@ export function HeroScene() {
 
     let frameId: number | null = null;
     let isVisible = true;
+    let isTransitioning = false;
     const clock = new THREE.Clock();
     const targetRotation = new THREE.Vector2();
 
@@ -174,7 +176,7 @@ export function HeroScene() {
     };
 
     const start = () => {
-      if (!frameId) {
+      if (!frameId && !isTransitioning) {
         frameId = requestAnimationFrame(animate);
       }
     };
@@ -210,6 +212,21 @@ export function HeroScene() {
     observer.observe(canvas.parentElement ?? canvas);
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
+    const handleTransitionStart = () => {
+      isTransitioning = true;
+      stop();
+    };
+
+    const handleTransitionEnd = () => {
+      isTransitioning = false;
+      if (isVisible) {
+        start();
+      }
+    };
+
+    window.addEventListener(THEME_TRANSITION_START_EVENT, handleTransitionStart);
+    window.addEventListener(THEME_TRANSITION_END_EVENT, handleTransitionEnd);
+
     start();
 
     return () => {
@@ -218,6 +235,8 @@ export function HeroScene() {
       resizeObserver.disconnect();
       observer.disconnect();
       document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener(THEME_TRANSITION_START_EVENT, handleTransitionStart);
+      window.removeEventListener(THEME_TRANSITION_END_EVENT, handleTransitionEnd);
       coreGeometry.dispose();
       coreMaterial.dispose();
       (wireframe.geometry as THREE.EdgesGeometry).dispose();

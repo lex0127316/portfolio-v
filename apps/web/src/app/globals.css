@@ -46,6 +46,12 @@
   --font-serif: "Playfair Display", Georgia, serif;
   --font-mono: "JetBrains Mono", monospace;
   --radius: 0.5rem;
+  --theme-transition-duration: 550ms;
+  --theme-transition-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --theme-overlay-duration-in: 220ms;
+  --theme-overlay-duration-out: 320ms;
+  --theme-overlay-color: hsl(var(--background));
+  --theme-transition-elements: background-color, border-color, color, fill, stroke, box-shadow, opacity;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -54,7 +60,7 @@
   }
 }
 
-.dark {
+.dark-mode {
   --button-outline: rgba(255, 255, 255, 0.1);
   --badge-outline: rgba(255, 255, 255, 0.05);
   --opaque-button-border-intensity: 9;
@@ -105,6 +111,54 @@
     @apply bg-background text-foreground font-sans antialiased;
     text-rendering: optimizeLegibility;
     min-height: 100vh;
+  }
+
+}
+
+:root::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle at top, rgba(0, 0, 0, 0.08), transparent 45%),
+    radial-gradient(circle at bottom, rgba(0, 0, 0, 0.08), transparent 40%),
+    var(--theme-overlay-color);
+  transition-property: opacity;
+  transition-duration: var(--theme-overlay-duration-in);
+  transition-timing-function: var(--theme-transition-ease);
+  z-index: 2147483000;
+}
+
+:root[data-theme-transition="enter"]::before,
+:root[data-theme-transition="visible"]::before {
+  opacity: 1;
+}
+
+:root[data-theme-transition="exit"]::before {
+  opacity: 0;
+  transition-duration: var(--theme-overlay-duration-out);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root.theme-transition body,
+  :root.theme-transition button,
+  :root.theme-transition .gradient-backdrop,
+  :root.theme-transition .noise-layer,
+  :root.theme-transition .theme-transition-target {
+    transition-property: var(--theme-transition-elements);
+    transition-duration: var(--theme-transition-duration);
+    transition-timing-function: var(--theme-transition-ease);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root.theme-transition body,
+  :root.theme-transition button,
+  :root.theme-transition .gradient-backdrop,
+  :root.theme-transition .noise-layer,
+  :root.theme-transition .theme-transition-target {
+    transition-duration: 0ms !important;
   }
 }
 
