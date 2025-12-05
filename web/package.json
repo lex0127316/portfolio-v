@@ -41,6 +41,7 @@
     "@types/react-dom": "^19.0.0",
     "@types/three": "^0.170.0",
     "autoprefixer": "^10.4.20",
+    "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.0.7",
     "next-sitemap": "^4.2.3",
