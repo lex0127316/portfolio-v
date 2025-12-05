@@ -48,5 +48,8 @@
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.6.3"
+  },
+  "overrides": {
+    "zod-validation-error": "5.0.0"
   }
 }
