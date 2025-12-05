@@ -2,6 +2,7 @@ import { Hero } from "@/components/hero/hero";
 import { ProjectGrid } from "@/components/projects/project-grid";
 import { ExperienceTimeline } from "@/components/experience/experience-timeline";
 import { ContactCTA } from "@/components/contact/contact-cta";
+import { SocialRail } from "@/components/social-rail";
 import { getHeroCopy, getFeaturedProjects } from "@/lib/cms";
 import { getLatestRepos } from "@/lib/github";
 
@@ -32,19 +33,22 @@ export default async function Home() {
   };
 
   return (
-    <div className="space-y-16 pb-20 pt-10">
-      <Hero
-        hero={{
-          headline: hero.headline,
-          subheadline: hero.subheadline,
-          specialties: hero.specialties,
-          availability: hero.availability,
-        }}
-        stats={heroStats}
-      />
-      <ProjectGrid projects={projects} repos={repos} />
-      <ExperienceTimeline />
-      <ContactCTA />
-    </div>
+    <>
+      <SocialRail position="right" />
+      <div className="space-y-16 pb-20 pt-10">
+        <Hero
+          hero={{
+            headline: hero.headline,
+            subheadline: hero.subheadline,
+            specialties: hero.specialties,
+            availability: hero.availability,
+          }}
+          stats={heroStats}
+        />
+        <ProjectGrid projects={projects} repos={repos} />
+        <ExperienceTimeline />
+        <ContactCTA />
+      </div>
+    </>
   );
 }
