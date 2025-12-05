@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/cn";
 import {
@@ -46,6 +46,11 @@ export function NeuralBg({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const controllerRef = useRef<NeuralBackgroundController | null>(null);
   const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const palette = useMemo(() => (resolvedTheme === "dark" ? darkPalette : lightPalette), [resolvedTheme]);
   const toneClass =
@@ -92,6 +97,10 @@ export function NeuralBg({
   useEffect(() => {
     controllerRef.current?.setColorShift(appliedColorShift);
   }, [appliedColorShift]);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <canvas
