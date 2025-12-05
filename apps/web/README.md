@@ -1,22 +1,23 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This folder now contains the entire portfolio. The legacy Vite client and Express server have been removed, so all development happens inside `apps/web`.
+
+## Repository layout
+
+- `apps/web` – Next.js 16 application with App Router (the code you are editing)
+- `apps/web/src/app/api` – Next API routes used for features such as the résumé download
+
+Everything else in the repo exists only to support this app (e.g. `public/` assets and configs that sit next to this README).
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies and run the dev server from this directory:
 
 ```bash
+cd apps/web
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The app will be available at [http://localhost:3000](http://localhost:3000). Start editing by modifying files such as `src/app/page.tsx`; changes hot-reload automatically.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
