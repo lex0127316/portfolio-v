@@ -1,0 +1,23 @@
+<svg width="1600" height="1200" viewBox="0 0 1600 1200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Realtime collaboration canvas">
+  <defs>
+    <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <radialGradient id="pulse4" cx="0.5" cy="0.4" r="0.6">
+      <stop offset="0%" stop-color="#818cf8" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#312e81" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#g4)"/>
+  <circle cx="800" cy="420" r="460" fill="url(#pulse4)" opacity="0.5"/>
+  <rect x="220" y="220" width="1160" height="640" rx="56" fill="#060a1b" stroke="#c4b5fd" stroke-opacity="0.4" stroke-width="2"/>
+  <rect x="300" y="300" width="1000" height="200" rx="36" fill="#0f172a" stroke="#c084fc" stroke-opacity="0.5"/>
+  <rect x="300" y="540" width="640" height="240" rx="36" fill="#0f172a" stroke="#818cf8" stroke-opacity="0.4"/>
+  <rect x="980" y="540" width="320" height="240" rx="36" fill="#0f172a" stroke="#6366f1" stroke-opacity="0.4"/>
+  <rect x="260" y="840" width="1040" height="120" rx="34" fill="#060a1b" stroke="#60a5fa" stroke-opacity="0.4"/>
+  <text x="300" y="910" fill="#e0e7ff" font-family="Space Grotesk, 'Segoe UI', sans-serif" font-size="40" letter-spacing="0.1em">
+    Orbit Flow — Realtime collaboration canvas
+  </text>
+</svg>
+
