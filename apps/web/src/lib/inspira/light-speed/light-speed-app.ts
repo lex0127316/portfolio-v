@@ -1033,9 +1033,12 @@ export class LightSpeedApp {
     }
   }
 
-  setSize(width: number, height: number, updateStyles: boolean) {
+  setSize = (width: number, height: number, updateStyles: boolean) => {
+    if (!this.composer) {
+      return;
+    }
     this.composer.setSize(width, height, updateStyles);
-  }
+  };
 
   destroy() {
     this.dispose();

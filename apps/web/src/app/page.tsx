@@ -14,10 +14,21 @@ export default async function Home() {
     getLatestRepos(),
   ]);
 
+  const totalStars = repos.reduce((acc, repo) => acc + repo.stars, 0);
+
   const heroStats = {
-    shipped: `${projects.length}+ launches`,
-    performance: "99+ Lighthouse",
-    githubStars: `${repos.reduce((acc, repo) => acc + repo.stars, 0)}★`,
+    shipped: {
+      value: `${projects.length}+`,
+      descriptor: "launches",
+    },
+    performance: {
+      value: "99+",
+      descriptor: "Lighthouse",
+    },
+    githubStars: {
+      value: totalStars.toLocaleString(),
+      suffix: "★",
+    },
   };
 
   return (

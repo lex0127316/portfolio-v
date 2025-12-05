@@ -55,6 +55,12 @@ const DynamicHeroScene = dynamic(
   },
 );
 
+type StatValue = {
+  value: string;
+  descriptor?: string;
+  suffix?: string;
+};
+
 type HeroProps = {
   hero: {
     headline: string;
@@ -63,9 +69,9 @@ type HeroProps = {
     availability?: string;
   };
   stats: {
-    shipped: string;
-    performance: string;
-    githubStars: string;
+    shipped: StatValue;
+    performance: StatValue;
+    githubStars: StatValue;
   };
 };
 
@@ -215,9 +221,9 @@ export function Hero({ hero, stats }: HeroProps) {
             </p>
           )}
           <div className="grid grid-cols-3 gap-4" data-reveal="text">
-            <Stat label="Products shipped" value={stats.shipped} />
-            <Stat label="Performance budget" value={stats.performance} />
-            <Stat label="Community stars" value={stats.githubStars} />
+            <Stat label="Products shipped" {...stats.shipped} />
+            <Stat label="Performance budget" {...stats.performance} />
+            <Stat label="Community stars" {...stats.githubStars} />
           </div>
         </div>
 
@@ -238,11 +244,19 @@ export function Hero({ hero, stats }: HeroProps) {
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+type StatProps = StatValue & {
+  label: string;
+};
+
+function Stat({ label, value, descriptor, suffix }: StatProps) {
   return (
     <div className="rounded-2xl border border-border/60 bg-card/70 p-4">
       <p className="text-xs uppercase text-muted-foreground">{label}</p>
-      <p className="text-2xl font-semibold">{value}</p>
+      <p className="flex flex-wrap items-baseline gap-1 text-3xl font-semibold leading-tight text-foreground break-words">
+        <span>{value}</span>
+        {suffix ? <span className="text-xl font-semibold text-muted-foreground">{suffix}</span> : null}
+      </p>
+      {descriptor ? <p className="text-sm text-muted-foreground">{descriptor}</p> : null}
     </div>
   );
 }
