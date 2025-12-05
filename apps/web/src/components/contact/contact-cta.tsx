@@ -35,7 +35,7 @@ export function ContactCTA() {
       </div>
 
       <motion.form
-        className="space-y-5 overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-b from-slate-950/80 via-slate-950/50 to-slate-900/40 p-6 shadow-[0_40px_120px_rgba(2,6,23,0.65)] backdrop-blur-2xl md:p-8"
+        className="space-y-5 overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-b from-white/95 via-white/85 to-slate-100 p-6 shadow-[0_35px_80px_rgba(15,23,42,0.12)] backdrop-blur-xl md:p-8 dark:border-white/10 dark:from-slate-950/80 dark:via-slate-950/50 dark:to-slate-900/40 dark:shadow-[0_40px_120px_rgba(2,6,23,0.65)] dark:backdrop-blur-2xl"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -96,7 +96,7 @@ function HaloField({ id, label, placeholder, as = "input", required }: HaloField
           }}
         />
         <div
-          className="relative rounded-[2.6rem] p-[1.5px] shadow-[0_25px_70px_rgba(3,7,18,0.65)] transition duration-300 group-hover:shadow-[0_45px_90px_rgba(14,165,233,0.25)] group-focus-within:shadow-[0_45px_90px_rgba(79,70,229,0.35)]"
+          className="relative rounded-[2.6rem] p-[1.5px] shadow-[0_25px_70px_rgba(15,23,42,0.12)] transition duration-300 group-hover:shadow-[0_45px_90px_rgba(14,165,233,0.2)] group-focus-within:shadow-[0_45px_90px_rgba(79,70,229,0.25)] dark:shadow-[0_25px_70px_rgba(3,7,18,0.65)] dark:group-hover:shadow-[0_45px_90px_rgba(14,165,233,0.25)] dark:group-focus-within:shadow-[0_45px_90px_rgba(79,70,229,0.35)]"
           style={{
             background:
               "linear-gradient(130deg, rgba(14,165,233,0.55), rgba(236,72,153,0.4), rgba(59,130,246,0.5))",
@@ -104,17 +104,19 @@ function HaloField({ id, label, placeholder, as = "input", required }: HaloField
         >
           <div
             className={cn(
-              "relative rounded-[2.4rem] border border-white/10 bg-slate-950/80 px-6 text-base text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] backdrop-blur-2xl transition duration-300 focus-within:border-cyan-200/70 focus-within:bg-slate-950/60",
+              "relative rounded-[2.4rem] border border-white/70 bg-white/95 px-6 text-base text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-xl transition duration-300 focus-within:border-sky-400/60 focus-within:bg-white",
+              "dark:border-white/10 dark:bg-slate-950/80 dark:text-white dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] dark:backdrop-blur-2xl dark:focus-within:border-cyan-200/70 dark:focus-within:bg-slate-950/60",
               isTextarea ? "py-4" : "py-3",
             )}
           >
-            <span className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-60" />
+            <span className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/80 to-transparent opacity-80 dark:via-white/40" />
             <Component
               id={id}
               required={required}
               placeholder={placeholder}
               className={cn(
-                "w-full bg-transparent text-sm text-white placeholder:text-slate-300/70 focus:outline-none",
+                "w-full bg-transparent text-sm text-slate-900 placeholder:text-slate-500/70 focus:outline-none",
+                "dark:text-white dark:placeholder:text-slate-300/70",
                 isTextarea ? "min-h-[6.5rem] resize-none leading-relaxed" : "leading-none",
               )}
             />
@@ -129,10 +131,10 @@ function HaloButton({ children }: { children: ReactNode }) {
   return (
     <button
       type="submit"
-      className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-full border border-white/15 bg-gradient-to-r from-violet-500/80 via-indigo-500/80 to-sky-500/80 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_35px_90px_rgba(2,6,23,0.7)] transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 focus-visible:ring-offset-slate-950"
+      className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-full border border-white/60 bg-gradient-to-r from-sky-400 via-indigo-400 to-violet-400 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_25px_80px_rgba(15,23,42,0.25)] transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 focus-visible:ring-offset-white dark:border-white/15 dark:from-violet-500/80 dark:via-indigo-500/80 dark:to-sky-500/80 dark:shadow-[0_35px_90px_rgba(2,6,23,0.7)] dark:focus-visible:ring-offset-slate-950"
     >
-      <span className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-70" style={{ background: "radial-gradient(circle at 25% 15%, rgba(255,255,255,0.45), transparent 45%)" }} />
-      <span className="pointer-events-none absolute inset-[2px] rounded-full border border-white/25 bg-slate-950/30" />
+      <span className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-70" style={{ background: "radial-gradient(circle at 25% 15%, rgba(255,255,255,0.55), transparent 45%)" }} />
+      <span className="pointer-events-none absolute inset-[2px] rounded-full border border-white/40 bg-white/20 dark:border-white/25 dark:bg-slate-950/30" />
       <span className="relative flex items-center gap-2 text-sm font-semibold">
         {children}
       </span>
