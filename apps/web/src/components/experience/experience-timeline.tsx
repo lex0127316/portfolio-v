@@ -4,7 +4,11 @@ import * as React from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { experienceTimeline, Milestone } from "@/data/experience";
+import {
+  experienceTimeline,
+  Milestone,
+  totalExperienceYears,
+} from "@/data/experience";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -52,7 +56,9 @@ export function ExperienceTimeline({ items = experienceTimeline }: Props) {
         <p className="text-sm uppercase tracking-[0.4em] text-muted-foreground">
           Trajectory
         </p>
-        <h2 className="text-3xl font-semibold text-foreground">11+ years building futures at scale</h2>
+        <h2 className="text-3xl font-semibold text-foreground">
+          {totalExperienceYears}+ years building futures at scale
+        </h2>
         <p className="max-w-2xl text-base text-muted-foreground">
           From IDEO installations to Stripe’s dashboard and climate intelligence OSs, I partner
           deeply, measure obsessively, and lead with storytelling.
