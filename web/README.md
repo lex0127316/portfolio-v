@@ -1,9 +1,9 @@
-This folder now contains the entire portfolio. The legacy Vite client and Express server have been removed, so all development happens inside `apps/web`.
+This folder now contains the entire portfolio. The legacy Vite client and Express server have been removed, so all development happens inside `web/`.
 
 ## Repository layout
 
-- `apps/web` – Next.js 16 application with App Router (the code you are editing)
-- `apps/web/src/app/api` – Next API routes used for features such as the résumé download
+- `web/` – Next.js 16 application with App Router (the code you are editing)
+- `web/src/app/api` – Next API routes used for features such as the résumé download
 
 Everything else in the repo exists only to support this app (e.g. `public/` assets and configs that sit next to this README).
 
@@ -12,7 +12,7 @@ Everything else in the repo exists only to support this app (e.g. `public/` asse
 Install dependencies and run the dev server from this directory:
 
 ```bash
-cd apps/web
+cd web
 npm install
 npm run dev
 ```
