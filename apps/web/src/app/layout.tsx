@@ -4,8 +4,9 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { ScrollIndicator } from "@/components/micro/scroll-indicator";
 import { FluidCursor } from "@/components/micro/fluid-cursor";
+import { ScrollIndicator } from "@/components/micro/scroll-indicator";
+import { ContrastCursor } from "@/components/micro/contrast-cursor";
 import { NeuralBg } from "@/components/backgrounds/neural-bg";
 import { ThemeTransitionLoader } from "@/components/theme-transition-loader";
 import { siteConfig } from "@/config/site";
@@ -133,6 +134,7 @@ export default function RootLayout({
           <ThemeTransitionLoader />
           <ScrollIndicator />
           <FluidCursor className="hidden md:block" />
+          <ContrastCursor />
           <NeuralBg className="opacity-90" />
           <a
             href="#main-content"
