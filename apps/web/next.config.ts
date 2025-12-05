@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   reactCompiler: true,
   turbopack: {},
+  serverExternalPackages: ["pdfkit", "fontkit"],
   images: {
     remotePatterns: [
       {

@@ -25,6 +25,8 @@ export const siteConfig = {
     twitter: "https://x.com/romanmakes",
   },
   githubUsername: "vercel",
+  resumeDriveShareUrl: "https://drive.google.com/file/d/1kb0N4jpkIDm6IrYqMxFtFyKiiSh-iGBN/view?usp=drive_link",
+  resumeFileName: "LuisCarter_Resume.pdf",
 };
 
 export type SiteConfig = typeof siteConfig;

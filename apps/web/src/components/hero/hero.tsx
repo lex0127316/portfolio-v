@@ -4,13 +4,48 @@ import dynamic from "next/dynamic";
 import * as React from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Download, Loader2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MagneticButton } from "@/components/micro/magnetic-button";
+import { siteConfig } from "@/config/site";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(useGSAP);
 }
+
+const driveLinkToDownloadUrl = (url?: string) => {
+  if (!url) {
+    return "";
+  }
+
+  if (url.includes("uc?export=download")) {
+    return url;
+  }
+
+  // Extract the Google Drive file ID and reshape to a direct download endpoint.
+  const fileIdMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if (fileIdMatch?.[1]) {
+    return `https://drive.google.com/uc?export=download&id=${fileIdMatch[1]}`;
+  }
+
+  try {
+    const parsed = new URL(url);
+    const idParam = parsed.searchParams.get("id");
+    if (idParam) {
+      return `https://drive.google.com/uc?export=download&id=${idParam}`;
+    }
+  } catch {
+    return url;
+  }
+
+  return url;
+};
+
+const RESUME_SOURCE_URL =
+  process.env.NEXT_PUBLIC_RESUME_DOWNLOAD_URL ?? siteConfig.resumeDriveShareUrl;
+const RESUME_DOWNLOAD_ENDPOINT = driveLinkToDownloadUrl(RESUME_SOURCE_URL);
+const RESUME_FILE_NAME =
+  process.env.NEXT_PUBLIC_RESUME_FILE_NAME ?? siteConfig.resumeFileName ?? "resume.pdf";
 
 const DynamicHeroScene = dynamic(
   () => import("./three-hero").then((mod) => mod.HeroScene),
@@ -36,6 +71,11 @@ type HeroProps = {
 
 export function Hero({ hero, stats }: HeroProps) {
   const textRef = React.useRef<HTMLDivElement>(null);
+  const [isDownloading, setIsDownloading] = React.useState(false);
+  const [downloadFeedback, setDownloadFeedback] = React.useState<{
+    tone: "success" | "error" | "info";
+    message: string;
+  } | null>(null);
   useGSAP(
     () => {
       if (!textRef.current) {
@@ -51,6 +91,57 @@ export function Hero({ hero, stats }: HeroProps) {
     },
     { scope: textRef },
   );
+
+  React.useEffect(() => {
+    if (!downloadFeedback || downloadFeedback.tone !== "success") {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => setDownloadFeedback(null), 3500);
+    return () => window.clearTimeout(timeout);
+  }, [downloadFeedback]);
+
+  const handleResumeDownload = () => {
+    if (isDownloading) {
+      return;
+    }
+
+    if (!RESUME_DOWNLOAD_ENDPOINT) {
+      setDownloadFeedback({
+        tone: "info",
+        message: "Resume link is not configured yet.",
+      });
+      return;
+    }
+
+    setDownloadFeedback(null);
+    setIsDownloading(true);
+
+    try {
+      const anchor = document.createElement("a");
+      anchor.href = RESUME_DOWNLOAD_ENDPOINT;
+      anchor.download = RESUME_FILE_NAME;
+      anchor.rel = "noopener noreferrer";
+      anchor.style.display = "none";
+
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
+
+      setDownloadFeedback({
+        tone: "success",
+        message: "Your download is on its way.",
+      });
+    } catch (error) {
+      console.error("Failed to start resume download", error);
+      setDownloadFeedback({
+        tone: "error",
+        message: "Unable to start the download right now. Please try again.",
+      });
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   return (
     <section className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-white via-white/70 to-sky-50/60 p-6 shadow-[0_30px_110px_rgba(15,23,42,0.1)] dark:from-background dark:via-background/60 dark:to-background/20 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] sm:p-10">
@@ -83,10 +174,41 @@ export function Hero({ hero, stats }: HeroProps) {
             <MagneticButton icon={<ArrowRight className="h-4 w-4" />}>
               Book a build week
             </MagneticButton>
-            <Button variant="outline" className="rounded-full border-dashed border-border/70">
-              Download resume
+            <Button
+              variant="outline"
+              className="group relative overflow-hidden rounded-full border border-border/70 bg-white/80 px-6 py-2 font-semibold text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:bg-primary/5 hover:shadow-[0_12px_28px_rgba(59,130,246,0.25)] focus-visible:ring-2 focus-visible:ring-primary/60 dark:bg-black/30 dark:hover:bg-primary/10"
+              onClick={handleResumeDownload}
+              disabled={isDownloading}
+              type="button"
+            >
+              {isDownloading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Preparing download…
+                </>
+              ) : (
+                <>
+                  <Download className="h-4 w-4" />
+                  Download resume
+                </>
+              )}
             </Button>
           </div>
+          {downloadFeedback && (
+            <p
+              role="status"
+              aria-live="polite"
+              className={`text-sm ${
+                downloadFeedback.tone === "error"
+                  ? "text-red-500 dark:text-red-400"
+                  : downloadFeedback.tone === "success"
+                    ? "text-emerald-600 dark:text-emerald-400"
+                    : "text-muted-foreground"
+              }`}
+            >
+              {downloadFeedback.message}
+            </p>
+          )}
           {hero.availability && (
             <p data-reveal="text" className="text-sm text-muted-foreground">
               {hero.availability}
