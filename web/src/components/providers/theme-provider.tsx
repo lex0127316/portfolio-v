@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
-import type { ThemeProviderProps } from "next-themes/dist/types";
+import type { ThemeProviderProps } from "next-themes";
 import { DARK_MODE_CLASS, LIGHT_MODE_CLASS, THEME_STORAGE_KEY } from "@/lib/theme";
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {

@@ -104,7 +104,7 @@ export const getFeaturedProjects = cache(async (): Promise<Project[]> => {
     const entries = await client.getEntries({
       content_type: "project",
       limit: 6,
-      order: "-fields.priority",
+      order: ["-fields.priority"],
     });
     const mapped = entries.items
       .map(mapProjectEntry)

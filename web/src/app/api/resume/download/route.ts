@@ -5,17 +5,21 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 type PdfkitModule = typeof import("pdfkit");
+type PdfkitImport = PdfkitModule & { default?: PdfkitModule };
 let pdfkitPromise: Promise<PdfkitModule> | null = null;
 
 const loadPdfkit = async () => {
   if (!pdfkitPromise) {
-    pdfkitPromise = import("pdfkit");
+    pdfkitPromise = import("pdfkit").then((mod) => {
+      const resolved = mod as PdfkitImport;
+      return resolved.default ?? resolved;
+    });
   }
   return pdfkitPromise;
 };
 
 const generatePdfBuffer = async () => {
-  const { default: PDFDocument } = await loadPdfkit();
+  const PDFDocument = await loadPdfkit();
   const doc = new PDFDocument({ margin: 54 });
   const chunks: Buffer[] = [];
 

@@ -11,7 +11,7 @@ type ContrastCursorProps = {
 
 export function ContrastCursor({ size = 32, className }: ContrastCursorProps) {
   const cursorRef = React.useRef<HTMLDivElement>(null);
-  const rafRef = React.useRef<number>();
+  const rafRef = React.useRef<number | null>(null);
   const targetRef = React.useRef({ x: -100, y: -100 });
   const currentRef = React.useRef({ x: -100, y: -100 });
   const [isEnabled, setIsEnabled] = React.useState(false);
