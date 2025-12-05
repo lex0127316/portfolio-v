@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { siteConfig } from "@/config/site";
@@ -17,8 +18,15 @@ export function Navigation() {
     <header className="sticky top-0 z-40 border-b border-border/50 bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
         <div className="flex items-center gap-3">
-          <span className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-card text-sm font-semibold">
-            LC
+          <span className="inline-flex size-10 items-center justify-center overflow-hidden rounded-full border border-border bg-card">
+            <Image
+              src="/logo/bird_2.jpg"
+              alt="Portfolio logo"
+              width={40}
+              height={40}
+              className="size-full object-cover"
+              priority
+            />
           </span>
           <div>
             <p className="text-sm font-semibold text-foreground">{siteConfig.name}</p>
