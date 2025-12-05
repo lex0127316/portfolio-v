@@ -18,7 +18,7 @@ export function Navigation() {
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
         <div className="flex items-center gap-3">
           <span className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-card text-sm font-semibold">
-            RM
+            LC
           </span>
           <div>
             <p className="text-sm font-semibold text-foreground">{siteConfig.name}</p>

@@ -1,12 +1,12 @@
 export const siteConfig = {
-  name: "Luis Carter – Principal Engineer",
-  title: "Luis Carter — Creative Principal Engineer & Product Partner",
+  name: "Luis Carter – Senior Software Engineer",
+  title: "Luis Carter — Creative Senior Software Engineer & Product Partner",
   description:
     "I help ambitious founders ship AI-native products with cinematic polish, performance budgets, and human-centered strategy.",
   url: "https://modern-portfolio.local",
   ogImage: "/og.jpg",
   keywords: [
-    "Principal Engineer",
+    "Senior Software Engineer",
     "Next.js",
     "Three.js",
     "GSAP",

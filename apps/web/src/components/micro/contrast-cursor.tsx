@@ -9,7 +9,7 @@ type ContrastCursorProps = {
   className?: string;
 };
 
-export function ContrastCursor({ size = 24, className }: ContrastCursorProps) {
+export function ContrastCursor({ size = 32, className }: ContrastCursorProps) {
   const cursorRef = React.useRef<HTMLDivElement>(null);
   const rafRef = React.useRef<number>();
   const targetRef = React.useRef({ x: -100, y: -100 });
